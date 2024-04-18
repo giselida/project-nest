@@ -7,13 +7,13 @@ export type UsersDocument = HydratedDocument<Users>;
 export class Users {
   @Prop()
   id: string;
-  @Prop()
+  @Prop({ required: true })
   name: string;
-  @Prop()
+  @Prop({ required: true })
   userName: string;
-  @Prop()
+  @Prop({ required: true })
   email: string;
-  @Prop()
+  @Prop({ required: true })
   password: string;
 }
 

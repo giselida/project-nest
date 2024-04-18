@@ -1,13 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UsePipes, ValidationPipe } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UserDTO } from 'src/dto/user.dto';
-import { Users } from 'src/schemas/users.schema';
-
+import { Users } from 'src/schema/users.schema';
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(Users.name) private userModel: Model<Users>) {}
 
+  @UsePipes(ValidationPipe)
   create(user: UserDTO): Promise<Users> {
     return new this.userModel(user).save();
   }
@@ -20,7 +20,7 @@ export class UsersService {
     return this.userModel.findById(id).exec();
   }
 
-  update(id: string, user: Users): Promise<Users> {
+  update(id: string, user: UserDTO): Promise<Users> {
     return this.userModel
       .findByIdAndUpdate(
         {
